@@ -35,17 +35,19 @@ public class ChamadosService {
         repository.addChamado(chamado);
     }
     
-     public String concluirChamado(Integer id) {
-        String statusAtual = repository.pegartStatusporId(id);
+    public String concluirChamado(Integer id, String solucaoAplicada) {
+    String statusAtual = repository.pegartStatusporId(id);
 
-        if (statusAtual == null) {
-            return "Chamado não encontrado";
-        }
-        if (statusAtual.equals("Resolvido")) {
-            return "Chamado já resolvido";
-        }
-
-        repository.concluirChamado(id);
-        return "Chamado concluído com sucesso!";
+    if (statusAtual == null) {
+        return "Chamado não encontrado";
     }
+    if (statusAtual.equals("Resolvido")) {
+        return "Chamado já resolvido e não pode ser editado";
+    }
+
+    repository.concluirChamado(id, solucaoAplicada);
+    return "Chamado concluído com sucesso!";
+    }
+     
+     
 }

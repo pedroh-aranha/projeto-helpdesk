@@ -18,17 +18,20 @@ public class ChamadosBean {
     private String prioridade;
     private String status;
     private String nomefuncionario;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String solucaoAplicada; 
 
     public ChamadosBean() {
     }
 
-    public ChamadosBean(Integer id, Integer funcionarioid, String descricao, String prioridade, String status, String nomefuncionario) {
+    public ChamadosBean(Integer id, Integer funcionarioid, String descricao, String prioridade, String status, String nomefuncionario, String solucaoAplicada) {
         this.id = id;
         this.funcionarioid = funcionarioid;
         this.descricao = descricao;
         this.prioridade = prioridade;
         this.status = status;
         this.nomefuncionario = nomefuncionario;
+        this.solucaoAplicada = solucaoAplicada;
     }
 
     public Integer getId() {
@@ -79,5 +82,13 @@ public class ChamadosBean {
         this.nomefuncionario = nomefuncionario;
     }
 
- 
+    public String getSolucaoAplicada() {
+        return solucaoAplicada;
+    }
+
+    public void setSolucaoAplicada(String solucaoAplicada) {
+        this.solucaoAplicada = solucaoAplicada;
+    }
+
+    
 }
