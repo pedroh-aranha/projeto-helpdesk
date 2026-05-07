@@ -43,8 +43,11 @@ public class ChamadosController {
     }
 
     @PutMapping("/{id}/concluir")
-    public ResponseEntity<String> concluirChamado(@PathVariable Integer id) {
-        String resposta = service.concluirChamado(id);
+    public ResponseEntity<String> concluirChamado(@PathVariable Integer id, @RequestBody(required = false) ChamadosBean body) {
+        if (body.getSolucaoAplicada() == null || body.getSolucaoAplicada().isBlank()) {
+            return ResponseEntity.badRequest().body("solucao Aplicada é obrigatória");
+        }
+        String resposta = service.concluirChamado(id, body.getSolucaoAplicada());
         if (resposta.equals("Chamado concluído com sucesso!")) {
             return ResponseEntity.ok(resposta);
         }

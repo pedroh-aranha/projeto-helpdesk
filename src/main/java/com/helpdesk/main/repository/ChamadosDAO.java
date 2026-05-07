@@ -20,13 +20,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ChamadosDAO {
 
-    // POST /chamados
     public void addChamado(ChamadosBean chamado) {
         try {
             Connection conn = Conexao.conectar();
-            PreparedStatement stmt = conn.prepareStatement(
-                "INSERT INTO chamados (funcionario_id, descricao, prioridade, status) VALUES (?,?,?,?)"
-            );
+            
+            PreparedStatement stmt = null;
+            ResultSet rs = null;
+            
+            stmt = conn.prepareStatement("INSERT INTO chamados (funcionario_id, descricao, prioridade, status) VALUES (?,?,?,?)");
             stmt.setInt(1, chamado.getFuncionarioid());
             stmt.setString(2, chamado.getDescricao());
             stmt.setString(3, chamado.getPrioridade());
@@ -85,17 +86,19 @@ public class ChamadosDAO {
         return null;
     }
 
-    public void concluirChamado(Integer id) {
-        try {
-            Connection conn = Conexao.conectar();
-            PreparedStatement stmt = conn.prepareStatement(
-                "UPDATE chamados SET status = 'Resolvido' WHERE id = ?"
-            );
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
+    public void concluirChamado(Integer id, String solucaoAplicada) {
+    try {
+        Connection conn = Conexao.conectar();
+        PreparedStatement stmt = conn.prepareStatement(
+            "UPDATE chamados SET status = 'Resolvido', solucao_aplicada = ? WHERE id = ?"
+        );
+        stmt.setString(1, solucaoAplicada);
+        stmt.setInt(2, id);
+        stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+    
 }
 
