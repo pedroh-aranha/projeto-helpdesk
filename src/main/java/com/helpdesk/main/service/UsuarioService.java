@@ -24,8 +24,8 @@ public class UsuarioService {
         return "cadastrado com sucesso";
     }
     
-    public void login(String email, String senha) {
-         repository.login(email, senha);
-       
+    public UsuarioBean login(String email, String senha) {
+        return repository.login(email, senha);
     }
+    
 }
