@@ -29,7 +29,7 @@ public class UsuarioDAO {
             stmt.setString(1, email);
             stmt.setString(2, senha);
             
-            stmt.executeUpdate();
+            stmt.executeQuery();
             
             if(rs.next()){
             auth.setNome(rs.getString("nome"));

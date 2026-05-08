@@ -4,11 +4,15 @@
  */
 package com.helpdesk.main.controller;
 
+
+import com.helpdesk.main.model.AutenticadoBean;
 import com.helpdesk.main.model.UsuarioBean;
+import com.helpdesk.main.service.TokenService;
 import com.helpdesk.main.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -16,19 +20,29 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Aluno
  */
 @RestController
+@RequestMapping("/usuario")
 public class UsuarioController {
     
     @Autowired
-    private UsuarioService service;
+    private UsuarioService uservice;
+    
+    @Autowired
+    private TokenService tservice;
     
     @PostMapping("/cadastrar")
     public void register(@RequestBody UsuarioBean usuario) {
-        service.register(usuario);      
+        uservice.register(usuario);      
     }
     
     
     @PostMapping("/login")
-    public void login() {
-
+    public AutenticadoBean login(@RequestBody AutenticadoBean autenticado) {
+        UsuarioBean usuario = uservice.login(autenticado.getEmail(), autenticado.getSenha());
+        String token = tservice.gerarToken(usuario.getEmail());
+        AutenticadoBean retorno = new AutenticadoBean();
+        retorno.setNome(usuario.getNome());
+        retorno.setEmail(usuario.getEmail());
+        retorno.setToken(token);
+        return retorno;
     }
 }
