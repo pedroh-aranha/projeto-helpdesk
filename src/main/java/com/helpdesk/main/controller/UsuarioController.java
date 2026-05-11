@@ -38,10 +38,9 @@ public class UsuarioController {
     @PostMapping("/login")
     public AutenticadoBean login(@RequestBody AutenticadoBean autenticado) {
         UsuarioBean usuario = uservice.login(autenticado.getEmail(), autenticado.getSenha());
-        String token = tservice.gerarToken(usuario.getEmail());
+        String token = tservice.gerarToken(usuario.getNome());
         AutenticadoBean retorno = new AutenticadoBean();
         retorno.setNome(usuario.getNome());
-        retorno.setEmail(usuario.getEmail());
         retorno.setToken(token);
         return retorno;
     }
